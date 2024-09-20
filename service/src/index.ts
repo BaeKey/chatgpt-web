@@ -1,10 +1,12 @@
 import express from 'express'
+import type { ChatGPTAPI, ChatGPTUnofficialProxyAPI } from 'chatgpt'
 import type { RequestProps } from './types'
 import type { ChatMessage } from './chatgpt'
 import { chatConfig, chatReplyProcess, currentModel } from './chatgpt'
 import { auth } from './middleware/auth'
 import { limiter } from './middleware/limiter'
 import { isNotEmptyString } from './utils/is'
+import { getGPT3, getGPT4o, getGPT4omini } from './chatgpt/models'
 
 const app = express()
 const router = express.Router()
@@ -23,8 +25,17 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
   try {
-    const { prompt, options = {}, systemMessage, temperature, top_p } = req.body as RequestProps
+    const { prompt, options = {}, systemMessage, temperature, top_p, model } = req.body as RequestProps
     let firstChunk = true
+    let api: ChatGPTAPI | ChatGPTUnofficialProxyAPI
+
+    if (model === 'gpt-3.5-turbo')
+      api = getGPT3()
+    else if (model === 'gpt-4o')
+      api = getGPT4o()
+    else if (model === 'gpt-4o-mini')
+      api = getGPT4omini()
+
     await chatReplyProcess({
       message: prompt,
       lastContext: options,
@@ -35,7 +46,8 @@ router.post('/chat-process', [auth, limiter], async (req, res) => {
       systemMessage,
       temperature,
       top_p,
-    })
+      model,
+    }, api)
   }
   catch (error) {
     res.write(JSON.stringify(error))

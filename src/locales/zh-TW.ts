@@ -65,6 +65,7 @@ export default {
     role: '角色設定',
     temperature: 'Temperature',
     top_p: 'Top_p',
+    model: 'Model',
     resetUserInfo: '重設使用者資訊',
     chatHistory: '紀錄',
     theme: '主題',

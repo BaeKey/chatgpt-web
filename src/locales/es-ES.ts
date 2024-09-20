@@ -64,6 +64,7 @@ export default {
     role: 'Rol',
     temperature: 'Temperatura',
     top_p: 'Top_p',
+    model: 'Model',
     resetUserInfo: 'Restablecer información de usuario',
     chatHistory: 'Historial de chat',
     theme: 'Tema',

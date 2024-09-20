@@ -65,6 +65,7 @@ export default {
     role: '역할',
     temperature: '온도',
     top_p: 'Top_p',
+    model: 'Model',
     resetUserInfo: '사용자 정보 초기화',
     chatHistory: '채팅 기록',
     theme: '테마',

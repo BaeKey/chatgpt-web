@@ -64,6 +64,7 @@ export default {
     role: 'Vai trò',
     temperature: 'Nhiệt độ',
     top_p: 'Top_p',
+    model: 'Model',
     resetUserInfo: 'Đặt lại thông tin người dùng',
     chatHistory: 'Lịch sử trò chuyện',
     theme: 'Giao diện',
